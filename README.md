@@ -8,8 +8,8 @@ This code repository contains an implementation of (gradient / Hessian of) the l
 
 We make use of the mean-parameterized form in Bregman clustering for document clustering in high-dimensional (>25k dim) text embedding spaces, for the classical document datasets ['20-newsgroups'](https://scikit-learn.org/0.19/datasets/twenty_newsgroups.html) and ['classic3'](http://ir.dcs.gla.ac.uk/resources/test_collections/).
 
-The [example notebook](example_bregman_clustering.ipynb) contains a small toy example of Bregman clustering that fits a mixture of von Mises-Fisher distribution in mean paramtrization to several hundred data points in $1000$ dimensions within a fraction of a second. 
-The notebook [experiments.ipynb](https://github.com/vmf-negentropy/vmf-negentropy/blob/master/experiments.ipynb) can be used to reproduce all figures and numerical results of the manuscript.
+The [example notebook](https://github.com/vmf-negentropy/vmf-negentropy/blob/master/example_bregman_clustering.ipynb) contains a small toy example of Bregman clustering that fits a mixture of von Mises-Fisher distribution in mean paramtrization to several hundred data points in $1000$ dimensions within a fraction of a second. 
+The [experiments notebook](https://github.com/vmf-negentropy/vmf-negentropy/blob/master/experiments.ipynb) can be used to reproduce all figures and numerical results of the manuscript.
 
 
 ## Background
