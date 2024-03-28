@@ -1,6 +1,8 @@
 Code repository for the study
 
-"A solution for the mean parametrization of the von Mises-Fisher distribution"
+"A solution for the mean parametrization of the von Mises-Fisher distribution" 
+
+You can find the current (updated) [manuscript here](https://github.com/vmf-negentropy/vmf-negentropy/blob/master/vonMisesNegEntropy_updated.pdf). 
 
 ## Contents
 
