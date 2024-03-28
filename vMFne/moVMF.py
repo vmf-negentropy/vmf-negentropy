@@ -1,6 +1,6 @@
 import numpy as np
-from vMFne.negentropy import gradΨ
-from vMFne.logpartition import vMF_loglikelihood_Φ
+from vMFne.negentropy import Ψ
+from vMFne.logpartition import vMF_loglikelihood_Φ, invgradΦ_base
 import scipy.special
 
 def log_joint_vMF_mixture_Φ(X,w,ηs):
@@ -106,7 +106,8 @@ def em_M_step_Φ(X, post, κ_max=np.inf, tie_norms=False):
     mu_norms = np.linalg.norm(mus,axis=1)
     rbar = mu_norms / nalphas
     mus = mus / mu_norms.reshape(-1,1)  # unit-norm 'mean parameter' vectors
-    κs = np.minimum(rbar * (D - rbar**2) / (1 - rbar**2), κ_max)
+    κs_est = invgradΦ_base(rbar, D, order=2, K=50)
+    κs = np.minimum(κs_est, κ_max)
     if tie_norms:
         κs = κs.mean() * np.ones_like(κs)
     ηs = mus * κs.reshape(-1,1)
@@ -151,7 +152,7 @@ def init_EM_Φ(X, K, uniform_norm=False, Ψ0=None):
         μs_norm = np.linalg.norm(μs_init,axis=-1)
         μs_init = μs_init / μs_norm.reshape(-1,1) * μs_norm.mean()
 
-    ηs_init = gradΨ(μs_init,D=D,Ψ0=Ψ0)
+    _, ηs_init = Ψ(μs_init,D=D,Ψ0=[0., 0.], return_grad=True)
 
     return ηs_init
 
@@ -218,6 +219,7 @@ def softMoVMF(X, K, max_iter=50, w_init=None, ηs_init=None, verbose=False,
         print('inital kappa:', np.linalg.norm(ηs,axis=-1))
 
     LL = np.zeros(max_iter) # likelihood (up to multiplicative constant)
+    ii = 0
     for ii in range(max_iter):
 
         # E-step: - compute cluster responsibilities
@@ -302,6 +304,7 @@ def hardMoVMF(X, K, max_iter=50, w_init=None, ηs_init=None, verbose=False,
         print('inital kappa:', np.linalg.norm(ηs,axis=-1))
 
     LL = np.zeros(max_iter) # likelihood (up to multiplicative constant)
+    ii = 0
     for ii in range(max_iter):
 
         # E-step: - compute (hardened) cluster responsibilities
